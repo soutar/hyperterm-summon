@@ -3,6 +3,10 @@
   "version": "1.2.0",
   "description": "Summon your Hyperterm windows with a system-wide hotkey",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soutar/hyperterm-summon.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
