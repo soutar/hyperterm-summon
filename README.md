@@ -1,6 +1,6 @@
 # hyperterm-summon
 
-Summon your Hyperterm windows with a system-wide hotkey. In a multi-window situation, hyperterm-summon will remember which window was active last and restore focus to it.
+Summon your Hyperterm windows with a system-wide hotkey. In a multi-window situation, hyperterm-summon will remember which window was active last and restore focus to it. If HyperTerm is already active when the hotkey is pressed, your terminal windows will be hidden and (on Mac OS only) your previously-active application will regain focus.
 
 ## Install
 
