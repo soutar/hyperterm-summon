@@ -1,19 +1,26 @@
-const { app, dialog, globalShortcut } = require('electron');
+const { dialog, globalShortcut } = require('electron');
 
 const windowSet = new Set([]);
 
-function registerSummonShortcut ({ plugins, config }) {
+function registerSummonShortcut (app) {
+  const { plugins, config } = app;
   function register (accelerator) {
     if (!accelerator) return;
     const registered = globalShortcut.register(accelerator, () => {
-      [...windowSet].forEach((win, index) => {
-        console.log('showing window')
-        if (index === windowSet.length-1) {
-          win.focus();
-        } else {
-          win.show();
-        }
-      });
+      const windows = [...windowSet];
+      const hiddenWindows = windows.filter(window => !window.isVisible());
+      if (hiddenWindows.length === 0) {
+        windows.forEach(win => win.hide());
+        app.hide(); // Mac OS only (re-focuses the last active app)
+      } else {
+        windows.forEach((win, index) => {
+          if (index === windowSet.length-1) {
+            win.focus();
+          } else {
+            win.show();
+          }
+        });
+      }
     });
 
     if (!registered) {
