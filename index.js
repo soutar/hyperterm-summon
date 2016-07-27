@@ -22,6 +22,9 @@ function registerSummonShortcut (app) {
   const { plugins, config } = app;
   function register (accelerator) {
     if (!accelerator) return;
+    if (globalShortcut.isRegistered(accelerator)) {
+      globalShortcut.unregister(accelerator);
+    }
     const registered = globalShortcut.register(accelerator, () => {
       const windows = [...windowSet];
       const focusedWindows = windows.filter(window => window.isFocused());
