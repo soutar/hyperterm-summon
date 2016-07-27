@@ -22,9 +22,7 @@ function registerSummonShortcut (app) {
   const { plugins, config } = app;
   function register (accelerator) {
     if (!accelerator) return;
-    if (globalShortcut.isRegistered(accelerator)) {
-      globalShortcut.unregister(accelerator);
-    }
+    globalShortcut.unregister(accelerator);
     const registered = globalShortcut.register(accelerator, () => {
       const windows = [...windowSet];
       const focusedWindows = windows.filter(window => window.isFocused());
@@ -52,7 +50,7 @@ function registerSummonShortcut (app) {
     const cfg_ = plugins.getDecoratedConfig();
     if (cfg_.summonShortcut !== cfg.summonShortcut) {
       unregister(cfg.summonShortcut);
-      register(cfg_.summonShortcut, cfg.summonShortcut);
+      register(cfg_.summonShortcut);
       cfg = cfg_;
     }
   });
