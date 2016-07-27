@@ -1,0 +1,21 @@
+{
+  "name": "hyperterm-summon",
+  "version": "1.0.0",
+  "description": "Summon your Hyperterm windows with a system-wide hotkey",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hyperterm",
+    "plugin",
+    "hotkey",
+    "shortcut",
+    "global",
+    "system",
+    "focus",
+    "summon"
+  ],
+  "author": "John Soutar <john@soutar.me>",
+  "license": "ISC"
+}
