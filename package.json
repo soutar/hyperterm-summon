@@ -21,5 +21,8 @@
     "summon"
   ],
   "author": "John Soutar <john@soutar.me>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "hyperterm-register-shortcut": "^1.0.1"
+  }
 }
