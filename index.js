@@ -1,5 +1,4 @@
-const { dialog, globalShortcut } = require('electron');
-
+const registerShortcut = require('hyperterm-register-shortcut');
 const windowSet = new Set([]);
 
 function showWindows (windows, app) {
@@ -18,53 +17,14 @@ function hideWindows (windows, app) {
   app.hide(); // Mac OS only (re-focuses the last active app)
 }
 
-function registerSummonShortcut (app) {
-  const { plugins, config } = app;
-  function register (accelerator) {
-    if (!accelerator) return;
-    globalShortcut.unregister(accelerator);
-    const registered = globalShortcut.register(accelerator, () => {
-      const windows = [...windowSet];
-      const focusedWindows = windows.filter(window => window.isFocused());
-      if (focusedWindows.length > 0) {
-        hideWindows(windows, app);
-      } else {
-        showWindows(windows, app);
-      }
-    });
-
-    if (!registered) {
-      dialog.showMessageBox({
-        message: `Could not register summon shortcut (${accelerator})`,
-        buttons: ['Ok']
-      });
-    }
+function toggleWindowVisibility (app) {
+  const windows = [...windowSet];
+  const focusedWindows = windows.filter(window => window.isFocused());
+  if (focusedWindows.length > 0) {
+    hideWindows(windows, app);
+  } else {
+    showWindows(windows, app);
   }
-  function unregister (accelerator) {
-    if (!accelerator) return;
-    globalShortcut.unregister(accelerator);
-  }
-
-  let cfg = plugins.getDecoratedConfig();
-  const cfgUnsubscribe = config.subscribe(() => {
-    const cfg_ = plugins.getDecoratedConfig();
-    if (cfg_.summonShortcut !== cfg.summonShortcut) {
-      unregister(cfg.summonShortcut);
-      register(cfg_.summonShortcut);
-      cfg = cfg_;
-    }
-  });
-
-  app.on('activate', () => {
-    showWindows([...windowSet], app);
-  });
-
-  app.on('will-quit', () => {
-    cfgUnsubscribe();
-    globalShortcut.unregisterAll();
-  });
-
-  register(cfg.summonShortcut);
 }
 
 function addWindow (window) {
@@ -78,7 +38,14 @@ function addWindow (window) {
   });
 }
 
+function setup (app) {
+  registerShortcut('summon', toggleWindowVisibility)(app);
+  app.on('activate', () => {
+    showWindows([...windowSet], app);
+  });
+}
+
 module.exports = {
-  onApp: registerSummonShortcut,
+  onApp: setup,
   onWindow: addWindow
 }
