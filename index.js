@@ -9,12 +9,16 @@ function showWindows (windows, app) {
       win.show();
     }
   });
-  app.show();
+  if (process.platform !== 'win32') app.show();
 }
 
 function hideWindows (windows, app) {
-  windows.forEach(win => win.hide());
-  app.hide(); // Mac OS only (re-focuses the last active app)
+  if (process.platform === 'win32') {
+    windows.forEach(win => win.minimize());    
+  } else {
+    windows.forEach(win => win.hide());
+    app.hide(); // Mac OS only (re-focuses the last active app)    
+  }
 }
 
 function toggleWindowVisibility (app) {
