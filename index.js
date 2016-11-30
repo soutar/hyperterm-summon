@@ -13,13 +13,15 @@ function showWindows (windows, app) {
 }
 
 function hideWindows (windows, app) {
-  if (win.isFullScreen()) return;
-  if (process.platform === 'win32') {
-    windows.forEach(win => win.minimize());
-  } else {
-    windows.forEach(win => win.hide());
-    app.hide(); // Mac OS only (re-focuses the last active app)    
-  }
+  windows.forEach(win => {
+    if (win.isFullScreen()) return;
+    if (process.platform === 'win32') {
+      win.minimize();
+    } else {
+      win.hide();
+    }
+  });
+  if (process.platform !== 'win32') app.hide(); // Mac OS only (re-focuses the last active app)
 }
 
 function toggleWindowVisibility (app) {
