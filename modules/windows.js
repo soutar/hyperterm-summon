@@ -42,6 +42,11 @@ function toggleWindowVisibility (app, windowSet) {
 function addWindow (window, windowSet) {
   windowSet.add(window);
 
+  window.on('focus', () => {
+    windowSet.delete(window);
+    windowSet.add(window);
+  });
+
   window.on('close', () => {
     windowSet.delete(window);
   });
