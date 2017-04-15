@@ -1,43 +1,49 @@
 function showWindows (windows, app) {
   windows.forEach((win, index) => {
-    if (index === windows.length-1) {
+    if (index === windows.length - 1) {
+      win.show();
       win.focus();
     } else {
       win.show();
     }
   });
-  if (process.platform !== 'win32') app.show();
+
+  if (process.platform !== 'win32') {
+    app.show();
+  }
 }
 
 function hideWindows (windows, app) {
   windows.forEach(win => {
-    if (win.isFullScreen()) return;
-    if (process.platform === 'win32') {
-      win.minimize();
-    } else {
-      win.hide();
+    if (win.isFullScreen()) {
+      return;
     }
-  });
-  if (process.platform !== 'win32') app.hide(); // Mac OS only (re-focuses the last active app)
-}
 
-function toggleWindowVisibility (windows, app) {
-  const focusedWindows = windows.filter(window => window.isFocused());
-  if (focusedWindows.length > 0) {
-    hideWindows(windows, app);
-  } else {
-    showWindows(windows, app);
+    process.platform === 'win32'
+      ? win.minimize()
+      : win.hide();
+  });
+
+  // Re-focuses the last active app for macOS only
+  if (process.platform !== 'win32') {
+    app.hide();
   }
 }
 
-function addWindow (windows, window) {
-  windows.add(window);
-  window.on('focus', () => {
-    windows.delete(window);
-    windows.add(window);
-  });
+function toggleWindowVisibility (app, windowSet) {
+  const windows = [...windowSet];
+  const focusedWindows = windows.filter(window => window.isFocused());
+
+  focusedWindows.length > 0
+    ? hideWindows(windows, app)
+    : showWindows(windows, app);
+}
+
+function addWindow (window, windowSet) {
+  windowSet.add(window);
+
   window.on('close', () => {
-    windows.delete(window);
+    windowSet.delete(window);
   });
 }
 
