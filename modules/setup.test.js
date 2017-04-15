@@ -13,17 +13,17 @@ let app = {
 };
 
 describe('setup', () => {
-  describe('shows the dock icon by default', () => {
+  describe('with default config', () => {
     beforeEach(() => {
       setup(app);
     });
 
-    it('hides the dock', () => {
+    it('does not hide the dock', () => {
       expect(app.dock.hide).not.toHaveBeenCalled();
     });
   });
 
-  describe('hides the dock icon when configured', () => {
+  describe('with hideDock config enabled', () => {
     beforeEach(() => {
       app.config.getConfig.mockReturnValueOnce({
         summon: {
