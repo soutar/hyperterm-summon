@@ -23,6 +23,6 @@
   "author": "John Soutar <john@soutar.me>",
   "license": "ISC",
   "dependencies": {
-    "hyperterm-register-shortcut": "^1.0.1"
+    "hyperterm-register-shortcut": "^1.1.0"
   }
 }
