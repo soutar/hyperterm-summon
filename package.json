@@ -8,7 +8,7 @@
     "url": "https://github.com/Soutar/hyperterm-summon.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "hyperterm",
@@ -24,5 +24,11 @@
   "license": "ISC",
   "dependencies": {
     "hyperterm-register-shortcut": "^1.1.0"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2"
+  },
+  "peerDependencies": {
+    "electron": "^1.6.2"
   }
 }
