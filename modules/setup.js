@@ -1,5 +1,6 @@
 const registerShortcut = require('hyperterm-register-shortcut');
 const toggleWindowVisibility = require('./windows').toggleWindowVisibility;
+const showWindows = require('./windows').showWindows;
 
 const DEFAULTS = {
   hideDock: false
