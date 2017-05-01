@@ -1,12 +1,16 @@
 function showWindows (windows, app) {
-  windows.forEach((win, index) => {
-    if (index === windows.length - 1) {
-      win.show();
-      win.focus();
-    } else {
-      win.show();
-    }
-  });
+  if (windows.length === 0) {
+    app.createWindow();
+  } else {
+    windows.forEach((win, index) => {
+      if (index === windows.length - 1) {
+        win.show();
+        win.focus();
+      } else {
+        win.show();
+      }
+    });
+  }
 
   if (process.platform !== 'win32') {
     app.show();
