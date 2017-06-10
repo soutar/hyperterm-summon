@@ -28,5 +28,7 @@
   "devDependencies": {
     "jest": "^19.0.2"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "electron": "^1.6.2"
+  }
 }
