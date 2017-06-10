@@ -1,5 +1,4 @@
 const setup = require('./setup');
-const windows = require('./windows');
 
 jest.mock('./windows')
 jest.mock('hyperterm-register-shortcut');
