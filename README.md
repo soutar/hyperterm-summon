@@ -10,10 +10,11 @@ Summon your Hyperterm windows with a system-wide hotkey. In a multi-window situa
 *NOTE:* For a list of valid shortcuts, see [Electron Accelerators](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
 
 ## Options
-| Key        | Description                                       | Default |
-| ---        | -----------                                       | ------- |
-| `hotkey`   | Shortcut to toggle Hyper window visibility.       | None    |
-| `hideDock` | Hide the Hyper icon in the dock and app switcher. | `false` |
+| Key          | Description                                       | Default |
+| ---          | -----------                                       | ------- |
+| `hideDock`   | Hide the Hyper icon in the dock and app switcher. | `false` |
+| `hideOnBlur` | Hide the Hyper when window loses focus.           | `true`  |
+| `hotkey`     | Shortcut to toggle Hyper window visibility.       | None    |
 
 ## Example Config
 ```js
