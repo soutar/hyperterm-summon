@@ -1,9 +1,9 @@
 const registerShortcut = require('hyperterm-register-shortcut');
-const toggleWindowVisibility = require('./windows').toggleWindowVisibility;
-const showWindows = require('./windows').showWindows;
+const windows = require('./windows');
 
 const DEFAULTS = {
-  hideDock: false
+  hideDock: false,
+  hideOnBlur: true
 }
 
 module.exports = function setup (app, windowSet) {
@@ -13,9 +13,21 @@ module.exports = function setup (app, windowSet) {
     app.dock.hide();
   }
 
-  registerShortcut('summon', toggleWindowVisibility)(app, windowSet);
+  registerShortcut('summon', windows.toggleWindowVisibility)(app, windowSet);
 
   app.on('activate', () => {
-    showWindows([...windowSet], app);
+    windows.showWindows([...windowSet], app);
   });
+
+  if (config.hideOnBlur) {
+    app.on('browser-window-blur', () => {
+      const focusedWindows = [...windowSet].filter(window => window.isFocused());
+
+      if (focusedWindows.length > 0) {
+        return false;
+      }
+
+      windows.hideWindows([...windowSet], app);
+    });
+  }
 }
