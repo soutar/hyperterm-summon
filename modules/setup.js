@@ -3,7 +3,8 @@ const windows = require('./windows');
 
 const DEFAULTS = {
   hideDock: false,
-  hideOnBlur: true
+  hideOnBlur: true,
+  hotkey: 'Ctrl+;'
 }
 
 module.exports = function setup (app, windowSet) {
@@ -13,7 +14,7 @@ module.exports = function setup (app, windowSet) {
     app.dock.hide();
   }
 
-  registerShortcut('summon', windows.toggleWindowVisibility)(app, windowSet);
+  registerShortcut('summon', windows.toggleWindowVisibility, DEFAULTS.hotkey)(app, windowSet);
 
   app.on('activate', () => {
     windows.showWindows([...windowSet], app);
