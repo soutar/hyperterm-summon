@@ -29,7 +29,7 @@ function hideWindows (windows, app) {
   });
 
   // Re-focuses the last active app for macOS only
-  if (process.platform !== 'win32') {
+  if (process.platform === 'darwin') {
     app.hide();
   }
 }
