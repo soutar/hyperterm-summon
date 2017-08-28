@@ -1,9 +1,9 @@
-const setup = require('./setup');
+const setup = require('./setup')
 
 jest.mock('./windows')
-jest.mock('hyperterm-register-shortcut');
+jest.mock('hyperterm-register-shortcut')
 
-let app;
+let app
 
 describe('setup', () => {
   beforeAll(() => {
@@ -16,7 +16,7 @@ describe('setup', () => {
       },
       on: jest.fn()
     }
-  });
+  })
 
   afterEach(() => {
     app.dock.hide.mockClear()
@@ -25,17 +25,17 @@ describe('setup', () => {
 
   describe('with default config', () => {
     beforeEach(() => {
-      setup(app);
-    });
+      setup(app)
+    })
 
     it('does not hide the dock', () => {
-      expect(app.dock.hide).not.toHaveBeenCalled();
-    });
+      expect(app.dock.hide).not.toHaveBeenCalled()
+    })
 
     it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function));
-    });
-  });
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    })
+  })
 
   describe('with hideDock config enabled', () => {
     beforeEach(() => {
@@ -43,14 +43,14 @@ describe('setup', () => {
         summon: {
           hideDock: true
         }
-      });
-      setup(app);
-    });
+      })
+      setup(app)
+    })
 
     it('hides the dock', () => {
-      expect(app.dock.hide).toHaveBeenCalled();
-    });
-  });
+      expect(app.dock.hide).toHaveBeenCalled()
+    })
+  })
 
   describe('with hideOnBlur config disabled', () => {
     beforeEach(() => {
@@ -58,12 +58,12 @@ describe('setup', () => {
         summon: {
           hideOnBlur: false
         }
-      });
-      setup(app);
-    });
+      })
+      setup(app)
+    })
 
     it('does not handle blur events', () => {
-      expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', expect.any(Function));
-    });
-  });
-});
+      expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    })
+  })
+})
