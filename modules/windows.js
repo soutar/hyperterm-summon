@@ -1,4 +1,6 @@
-function showWindows (windows, app) {
+function showWindows (set, app) {
+  const windows = [...set]
+
   if (windows.length === 0) {
     app.createWindow()
   } else {
@@ -17,7 +19,9 @@ function showWindows (windows, app) {
   }
 }
 
-function hideWindows (windows, app) {
+function hideWindows (set, app) {
+  const windows = [...set]
+
   windows.forEach(win => {
     if (win.isFullScreen()) {
       return
@@ -34,8 +38,8 @@ function hideWindows (windows, app) {
   }
 }
 
-function toggleWindowVisibility (app, windowSet) {
-  const windows = [...windowSet]
+function toggleWindowVisibility (set, app) {
+  const windows = [...set]
   const focusedWindows = windows.filter(window => window.isFocused())
 
   focusedWindows.length > 0
@@ -43,16 +47,16 @@ function toggleWindowVisibility (app, windowSet) {
     : showWindows(windows, app)
 }
 
-function addWindow (window, windowSet) {
-  windowSet.add(window)
+function addWindow (window, set) {
+  set.add(window)
 
   window.on('focus', () => {
-    windowSet.delete(window)
-    windowSet.add(window)
+    set.delete(window)
+    set.add(window)
   })
 
   window.on('close', () => {
-    windowSet.delete(window)
+    set.delete(window)
   })
 }
 

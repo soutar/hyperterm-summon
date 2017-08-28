@@ -32,6 +32,12 @@
   "peerDependencies": {
     "electron": "^1.6.2"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/utils/test.js"
+    ]
+  },
   "standard": {
     "globals": [
       "afterAll",
