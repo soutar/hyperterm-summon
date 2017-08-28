@@ -11,7 +11,7 @@ const DEFAULTS = {
   hotkey: 'Ctrl+;'
 }
 
-module.exports = function setup (app, windowSet) {
+module.exports = (app, windowSet) => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon)
 
   if (config.hideDock) {
@@ -26,7 +26,7 @@ module.exports = function setup (app, windowSet) {
 
   if (config.hideOnBlur) {
     app.on('browser-window-blur', () => {
-      const focusedWindows = [...windowSet].filter(window => window.isFocused())
+      const focusedWindows = [...windowSet].filter(w => w.isFocused())
 
       if (focusedWindows.length > 0) {
         return false

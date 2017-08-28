@@ -1,28 +1,12 @@
 const setup = require('../setup')
+const { generateApp } = require('../../fixtures/app')
 
 jest.mock('../windows')
 jest.mock('hyperterm-register-shortcut')
 
-let app
+let app = generateApp()
 
 describe('setup', () => {
-  beforeAll(() => {
-    app = {
-      config: {
-        getConfig: jest.fn(() => ({}))
-      },
-      dock: {
-        hide: jest.fn()
-      },
-      on: jest.fn()
-    }
-  })
-
-  afterEach(() => {
-    app.dock.hide.mockClear()
-    app.on.mockClear()
-  })
-
   describe('with default config', () => {
     beforeEach(() => {
       setup(app)

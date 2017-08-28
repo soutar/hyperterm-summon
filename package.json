@@ -33,6 +33,7 @@
     "electron": "^1.6.2"
   },
   "jest": {
+    "clearMocks": true,
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/utils/test.js"
