@@ -1,9 +1,5 @@
 const registerShortcut = require('hyperterm-register-shortcut')
-const {
-  hideWindows,
-  showWindows,
-  toggleWindowVisibility
-} = require('./windows')
+const Windows = require('./Windows')
 
 const DEFAULTS = {
   hideDock: false,
@@ -13,15 +9,16 @@ const DEFAULTS = {
 
 module.exports = (app, windowSet) => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon)
+  const windows = new Windows(windowSet, app)
 
   if (config.hideDock) {
     app.dock.hide()
   }
 
-  registerShortcut('summon', toggleWindowVisibility, DEFAULTS.hotkey)(windowSet, app)
+  registerShortcut('summon', windows.toggleWindowVisibility, DEFAULTS.hotkey)(windowSet, app)
 
   app.on('activate', () => {
-    showWindows(windowSet, app)
+    windows.showWindows()
   })
 
   if (config.hideOnBlur) {
@@ -32,7 +29,7 @@ module.exports = (app, windowSet) => {
         return false
       }
 
-      hideWindows(windowSet, app)
+      windows.hideWindows()
     })
   }
 }
