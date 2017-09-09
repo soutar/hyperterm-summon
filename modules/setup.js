@@ -22,6 +22,6 @@ module.exports = app => {
   }
 
   if (config.hideOnBlur) {
-    app.on('browser-window-blur', hideWindows)
+    app.on('browser-window-blur', () => { hideWindows(app) })
   }
 }

@@ -2,10 +2,8 @@ const registerShortcut = require('hyperterm-register-shortcut')
 const setup = require('../setup')
 const toggle = require('../toggle')
 const { generateApp } = require('../../fixtures/app')
-const { hideWindows } = require('../windows')
 
 jest.mock('../toggle')
-jest.mock('../windows')
 jest.mock('hyperterm-register-shortcut')
 
 let app = generateApp()
@@ -63,7 +61,7 @@ describe('setup', () => {
     })
 
     it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', hideWindows)
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
     })
   })
 })
