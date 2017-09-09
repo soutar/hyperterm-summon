@@ -1,35 +1,27 @@
 const registerShortcut = require('hyperterm-register-shortcut')
-const Windows = require('./Windows')
+const toggle = require('./toggle')
+const { hideWindows, showWindows } = require('./windows')
 
 const DEFAULTS = {
   hideDock: false,
-  hideOnBlur: true,
+  hideOnBlur: false,
   hotkey: 'Ctrl+;'
 }
 
-module.exports = (app, windowSet) => {
+module.exports = app => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon)
-  const windows = new Windows(windowSet, app)
+
+  registerShortcut('summon', toggle, DEFAULTS.hotkey)(app)
+  app.on('activate', () => { showWindows(app) })
+  app.on('browser-window-focus', () => {
+    // TODO: Set focused window to re-focus on show
+  })
 
   if (config.hideDock) {
     app.dock.hide()
   }
 
-  registerShortcut('summon', windows.toggleWindowVisibility, DEFAULTS.hotkey)(windowSet, app)
-
-  app.on('activate', () => {
-    windows.showWindows()
-  })
-
   if (config.hideOnBlur) {
-    app.on('browser-window-blur', () => {
-      const focusedWindows = [...windowSet].filter(w => w.isFocused())
-
-      if (focusedWindows.length > 0) {
-        return false
-      }
-
-      windows.hideWindows()
-    })
+    app.on('browser-window-blur', hideWindows)
   }
 }

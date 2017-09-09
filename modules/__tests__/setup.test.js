@@ -1,6 +1,10 @@
+const registerShortcut = require('hyperterm-register-shortcut')
 const setup = require('../setup')
+const toggle = require('../toggle')
 const { generateApp } = require('../../fixtures/app')
+const { hideWindows } = require('../windows')
 
+jest.mock('../toggle')
 jest.mock('../windows')
 jest.mock('hyperterm-register-shortcut')
 
@@ -12,12 +16,24 @@ describe('setup', () => {
       setup(app)
     })
 
+    it('registers the default hot key', () => {
+      expect(registerShortcut).toHaveBeenCalledWith('summon', toggle, 'Ctrl+;')
+    })
+
+    it('handles the activate event', () => {
+      expect(app.on).toHaveBeenCalledWith('activate', expect.any(Function))
+    })
+
+    it('handles the focus events', () => {
+      expect(app.on).toHaveBeenCalledWith('browser-window-focus', expect.any(Function))
+    })
+
     it('does not hide the dock', () => {
       expect(app.dock.hide).not.toHaveBeenCalled()
     })
 
-    it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    it('does not handle blur events', () => {
+      expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
     })
   })
 
@@ -36,18 +52,18 @@ describe('setup', () => {
     })
   })
 
-  describe('with hideOnBlur config disabled', () => {
+  describe('with hideOnBlur config enabled', () => {
     beforeEach(() => {
       app.config.getConfig.mockReturnValueOnce({
         summon: {
-          hideOnBlur: false
+          hideOnBlur: true
         }
       })
       setup(app)
     })
 
-    it('does not handle blur events', () => {
-      expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    it('handles blur events', () => {
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', hideWindows)
     })
   })
 })
