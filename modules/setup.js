@@ -4,7 +4,7 @@ const { hideWindows, showWindows } = require('./windows')
 
 const DEFAULTS = {
   hideDock: false,
-  hideOnBlur: true,
+  hideOnBlur: false,
   hotkey: 'Ctrl+;'
 }
 

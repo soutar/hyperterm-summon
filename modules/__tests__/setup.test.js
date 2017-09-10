@@ -22,8 +22,8 @@ describe('applyConfig', () => {
       expect(app.dock.show).toHaveBeenCalled()
     })
 
-    it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    it('does not handle blur events', () => {
+      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
     })
   })
 
@@ -42,18 +42,18 @@ describe('applyConfig', () => {
     })
   })
 
-  describe('with hideOnBlur config disabled', () => {
+  describe('with hideOnBlur config enabled', () => {
     beforeEach(() => {
       app.config.getConfig.mockReturnValue({
         summon: {
-          hideOnBlur: false
+          hideOnBlur: true
         }
       })
       applyConfig(app)
     })
 
-    it('does not handle blur events', () => {
-      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+    it('handles blur events', () => {
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
     })
   })
 })
