@@ -1,18 +1,20 @@
+let lastFocusedWindow
+
 exports.hideWindows = app => {
+  lastFocusedWindow = app.getLastFocusedWindow()
   const windows = [...app.getWindows()]
 
-  windows.forEach(win => {
-    if (win.isFullScreen()) {
+  windows.forEach(w => {
+    if (w.isFullScreen()) {
       return
     }
 
     process.platform === 'win32'
-      ? win.minimize()
-      : win.hide()
+      ? w.minimize()
+      : w.hide()
   })
 
-  // Re-focuses the last active app for macOS only
-  if (process.platform === 'darwin') {
+  if (typeof app.hide === 'function') {
     app.hide()
   }
 }
@@ -20,20 +22,15 @@ exports.hideWindows = app => {
 exports.showWindows = app => {
   const windows = [...app.getWindows()]
 
-  if (windows.length === 0) {
-    app.createWindow()
-  } else {
-    windows.forEach((win, index) => {
-      if (index === windows.length - 1) {
-        win.show()
-        win.focus()
-      } else {
-        win.show()
-      }
-    })
+  windows.length === 0
+    ? app.createWindow()
+    : windows.forEach(w => w.show())
+
+  if (lastFocusedWindow) {
+    lastFocusedWindow.focus()
   }
 
-  if (process.platform !== 'win32') {
+  if (typeof app.show === 'function') {
     app.show()
   }
 }

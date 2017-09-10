@@ -1,7 +1,5 @@
 const dispose = require('./modules/dispose')
-const middleware = require('./modules/middleware')
-const setup = require('./modules/setup')
+const { onApp } = require('./modules/setup')
 
-exports.middleware = middleware
-exports.onApp = setup
+exports.onApp = onApp
 exports.onUnload = dispose
