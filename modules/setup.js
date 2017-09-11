@@ -37,7 +37,7 @@ const onApp = app => {
   const handleBlur = debounce(hideWindowsIfBlurred.bind(this, app), 100)
 
   app.on('activate', () => showWindows(app))
-  applyConfig(app)
+  applyConfig(app, handleBlur)
   app.config.subscribe(() => applyConfig(app, handleBlur))
 }
 
