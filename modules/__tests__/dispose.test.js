@@ -5,10 +5,12 @@ const { generateApp } = require('../../fixtures/app')
 // jest.mock('hyperterm-register-shortcut')
 
 const app = generateApp()
+const handleActivateMock = jest.fn()
+const handleBlurMock = jest.fn()
 
 describe('dispose', () => {
   beforeEach(() => {
-    dispose(app)
+    dispose(app, handleActivateMock, handleBlurMock)
   })
 
   it('shows the dock icon', () => {
@@ -20,14 +22,10 @@ describe('dispose', () => {
   })
 
   it('removes the activate listener', () => {
-    expect(app.removeListener).toHaveBeenCalledWith('activate')
-  })
-
-  it('removes the focus listener', () => {
-    expect(app.removeListener).toHaveBeenCalledWith('browser-window-focus')
+    expect(app.removeListener).toHaveBeenCalledWith('activate', handleActivateMock)
   })
 
   it('removes the blur listener', () => {
-    expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur')
+    expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
   })
 })

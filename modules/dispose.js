@@ -1,11 +1,9 @@
 // const { unregisterShortcut } = require('hyperterm-register-shortcut')
 
-module.exports = app => {
+module.exports = (app, handleActivate, handleBlur) => {
   app.dock.show()
   // TODO: Un-register shortcut when supported
   // unregisterShortcut()
-  // TODO: Scope removeListener to specific functions
-  app.removeListener('activate')
-  app.removeListener('browser-window-focus')
-  app.removeListener('browser-window-blur')
+  app.removeListener('activate', handleActivate)
+  app.removeListener('browser-window-blur', handleBlur)
 }

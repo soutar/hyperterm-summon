@@ -1,18 +1,21 @@
 const registerShortcut = require('hyperterm-register-shortcut')
 const toggle = require('../toggle')
-const { applyConfig, onApp } = require('../setup')
+const { applyConfig, handleActivate, onApp } = require('../app')
 const { generateApp } = require('../../fixtures/app')
+const { showWindows } = require('../windows')
 
 jest.mock('../toggle')
+jest.mock('../windows')
 jest.mock('hyperterm-register-shortcut')
 
 let app = generateApp()
-const handleBlur = jest.fn()
+const handleBlurMock = jest.fn()
+const handleActivateMock = jest.fn()
 
 describe('applyConfig', () => {
   describe('with default config', () => {
     beforeEach(() => {
-      applyConfig(app, handleBlur)
+      applyConfig(app, handleBlurMock)
     })
 
     it('registers the default hot key', () => {
@@ -24,7 +27,7 @@ describe('applyConfig', () => {
     })
 
     it('does not handle blur events', () => {
-      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', handleBlur)
+      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
     })
   })
 
@@ -35,7 +38,7 @@ describe('applyConfig', () => {
           hideDock: true
         }
       })
-      applyConfig(app, handleBlur)
+      applyConfig(app, handleBlurMock)
     })
 
     it('hides the dock', () => {
@@ -50,19 +53,27 @@ describe('applyConfig', () => {
           hideOnBlur: true
         }
       })
-      applyConfig(app, handleBlur)
+      applyConfig(app, handleBlurMock)
     })
 
     it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', handleBlur)
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
     })
+  })
+})
+
+describe('handleActivate', () => {
+  it('shows the windows', () => {
+    handleActivate(app)
+
+    expect(showWindows).toHaveBeenCalledTimes(1)
   })
 })
 
 describe('onApp', () => {
   describe('with default config', () => {
     beforeEach(() => {
-      onApp(app)
+      onApp(app, handleBlurMock, handleActivateMock)
     })
 
     it('handles the activate event', () => {
