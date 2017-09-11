@@ -7,11 +7,12 @@ jest.mock('../toggle')
 jest.mock('hyperterm-register-shortcut')
 
 let app = generateApp()
+const handleBlur = jest.fn()
 
 describe('applyConfig', () => {
   describe('with default config', () => {
     beforeEach(() => {
-      applyConfig(app)
+      applyConfig(app, handleBlur)
     })
 
     it('registers the default hot key', () => {
@@ -23,7 +24,7 @@ describe('applyConfig', () => {
     })
 
     it('does not handle blur events', () => {
-      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+      expect(app.removeListener).toHaveBeenCalledWith('browser-window-blur', handleBlur)
     })
   })
 
@@ -34,7 +35,7 @@ describe('applyConfig', () => {
           hideDock: true
         }
       })
-      applyConfig(app)
+      applyConfig(app, handleBlur)
     })
 
     it('hides the dock', () => {
@@ -49,11 +50,11 @@ describe('applyConfig', () => {
           hideOnBlur: true
         }
       })
-      applyConfig(app)
+      applyConfig(app, handleBlur)
     })
 
     it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', expect.any(Function))
+      expect(app.on).toHaveBeenCalledWith('browser-window-blur', handleBlur)
     })
   })
 })

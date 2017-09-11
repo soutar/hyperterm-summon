@@ -3,15 +3,13 @@ const toggle = require('./toggle')
 const { debounce } = require('lodash')
 const { hideWindows, showWindows } = require('./windows')
 
-let debounceHandleBlur
-
 const DEFAULTS = {
   hideDock: false,
   hideOnBlur: false,
   hotkey: 'Ctrl+;'
 }
 
-const handleBlur = app => {
+const hideWindowsIfBlurred = app => {
   const focusedWindows = [...app.getWindows()].some(w => w.isFocused())
 
   if (focusedWindows) {
@@ -21,7 +19,7 @@ const handleBlur = app => {
   hideWindows(app)
 }
 
-const applyConfig = app => {
+const applyConfig = (app, handleBlur) => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon)
 
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app)
@@ -31,15 +29,16 @@ const applyConfig = app => {
     : app.dock.show()
 
   config.hideOnBlur
-    ? app.on('browser-window-blur', debounceHandleBlur)
-    : app.removeListener('browser-window-blur', debounceHandleBlur)
+    ? app.on('browser-window-blur', handleBlur)
+    : app.removeListener('browser-window-blur', handleBlur)
 }
 
 const onApp = app => {
-  debounceHandleBlur = debounce(handleBlur.bind(this, app), 100)
+  const handleBlur = debounce(hideWindowsIfBlurred.bind(this, app), 100)
+
   app.on('activate', () => showWindows(app))
   applyConfig(app)
-  app.config.subscribe(() => applyConfig(app))
+  app.config.subscribe(() => applyConfig(app, handleBlur))
 }
 
 module.exports = {
