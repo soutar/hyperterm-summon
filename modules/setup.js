@@ -1,6 +1,9 @@
 const registerShortcut = require('hyperterm-register-shortcut')
 const toggle = require('./toggle')
+const { debounce } = require('lodash')
 const { hideWindows, showWindows } = require('./windows')
+
+let debounceHandleBlur
 
 const DEFAULTS = {
   hideDock: false,
@@ -27,14 +30,13 @@ const applyConfig = app => {
     ? app.dock.hide()
     : app.dock.show()
 
-  const handleBlurApp = handleBlur.bind(this, app)
-
   config.hideOnBlur
-    ? app.on('browser-window-blur', handleBlurApp)
-    : app.removeListener('browser-window-blur', handleBlurApp)
+    ? app.on('browser-window-blur', debounceHandleBlur)
+    : app.removeListener('browser-window-blur', debounceHandleBlur)
 }
 
 const onApp = app => {
+  debounceHandleBlur = debounce(handleBlur.bind(this, app), 100)
   app.on('activate', () => showWindows(app))
   applyConfig(app)
   app.config.subscribe(() => applyConfig(app))
