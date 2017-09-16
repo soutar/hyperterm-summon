@@ -15,10 +15,15 @@ exports.generateBlurCallback = callback => app => (
 )
 
 exports.hideWindows = app => {
-  lastFocusedWindow = app.getLastFocusedWindow()
-  const windows = [...app.getWindows()]
+  const visibleWindows = [...app.getWindows()].filter(w => w.isVisible())
 
-  windows.forEach(w => {
+  if (!visibleWindows.length) {
+    return false
+  }
+
+  lastFocusedWindow = app.getLastFocusedWindow()
+
+  visibleWindows.forEach(w => {
     if (w.isFullScreen()) {
       return
     }

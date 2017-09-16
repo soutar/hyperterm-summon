@@ -5,7 +5,7 @@ const { generateApp } = require('../../fixtures/app')
 jest.useFakeTimers()
 
 const app = generateApp()
-let callback, win
+let callback, win, hiddenApp, hiddenSet
 let set = generateWindowSet(2)
 
 describe('generateBlurCallback', () => {
@@ -56,6 +56,40 @@ describe('hideWindows', () => {
     app.getWindows.mockReturnValue(set)
   })
 
+  it('gets the last focused window', () => {
+    hideWindows(app)
+
+    expect(app.getLastFocusedWindow).toHaveBeenCalled()
+  })
+
+  describe('when no visible windows', () => {
+    beforeAll(() => {
+      hiddenApp = generateApp()
+      hiddenSet = generateWindowSet(3, { visible: false })
+      hiddenApp.getWindows.mockReturnValue(hiddenSet)
+    })
+
+    it('does not hide windows', () => {
+      process.platform = 'darwin'
+      hideWindows(hiddenApp)
+      expect([...hiddenSet][0].hide).not.toHaveBeenCalled()
+      expect([...hiddenSet][1].hide).not.toHaveBeenCalled()
+    })
+
+    it('does not minimize windows', () => {
+      process.platform = 'win32'
+      hideWindows(hiddenApp)
+      expect([...hiddenSet][0].minimize).not.toHaveBeenCalled()
+      expect([...hiddenSet][1].minimize).not.toHaveBeenCalled()
+    })
+
+    it('does not get last focused window', () => {
+      hideWindows(hiddenApp)
+
+      expect(hiddenApp.getLastFocusedWindow).not.toHaveBeenCalled()
+    })
+  })
+
   describe('when full screen window', () => {
     beforeAll(() => {
       win = generateWindow()
@@ -72,10 +106,12 @@ describe('hideWindows', () => {
     })
 
     it('does not minimize', () => {
+      process.platform = 'win32'
       expect(win.minimize).not.toHaveBeenCalled()
     })
 
     it('does not hide', () => {
+      process.platform = 'darwin'
       expect(win.hide).not.toHaveBeenCalled()
     })
   })
