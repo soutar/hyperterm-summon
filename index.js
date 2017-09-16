@@ -1,12 +1,12 @@
 const dispose = require('./modules/dispose')
 const { generateActivateCallback, onApp } = require('./modules/app')
-const { generateBlurCallback, hideWindows } = require('./modules/windows')
+const { generateBlurCallback, hideWindows, showWindows } = require('./modules/windows')
 
 let handleActivate, handleBlur
 
 exports.onApp = app => {
   handleBlur = generateBlurCallback(hideWindows)(app)
-  handleActivate = generateActivateCallback(app)
+  handleActivate = generateActivateCallback(showWindows)(app)
 
   onApp(app, handleActivate, handleBlur)
 }

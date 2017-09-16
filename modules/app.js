@@ -1,6 +1,5 @@
 const registerShortcut = require('hyperterm-register-shortcut')
 const toggle = require('./toggle')
-const { showWindows } = require('./windows')
 
 const DEFAULTS = {
   hideDock: false,
@@ -22,7 +21,7 @@ const applyConfig = (app, handleBlur) => {
     : app.removeListener('browser-window-blur', handleBlur)
 }
 
-const generateActivateCallback = app => () => showWindows(app)
+const generateActivateCallback = callback => app => event => callback(app)
 
 const onApp = (app, handleActivate, handleBlur) => {
   app.on('activate', handleActivate)
