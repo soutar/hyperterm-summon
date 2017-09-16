@@ -22,7 +22,7 @@ const applyConfig = (app, handleBlur) => {
     : app.removeListener('browser-window-blur', handleBlur)
 }
 
-const handleActivate = app => showWindows(app)
+const generateActivateCallback = app => () => showWindows(app)
 
 const onApp = (app, handleActivate, handleBlur) => {
   app.on('activate', handleActivate)
@@ -32,6 +32,6 @@ const onApp = (app, handleActivate, handleBlur) => {
 
 module.exports = {
   applyConfig,
-  handleActivate,
+  generateActivateCallback,
   onApp
 }

@@ -1,6 +1,6 @@
 const registerShortcut = require('hyperterm-register-shortcut')
 const toggle = require('../toggle')
-const { applyConfig, handleActivate, onApp } = require('../app')
+const { applyConfig, generateActivateCallback, onApp } = require('../app')
 const { generateApp } = require('../../fixtures/app')
 const { showWindows } = require('../windows')
 
@@ -10,7 +10,7 @@ jest.mock('hyperterm-register-shortcut')
 
 let app = generateApp()
 const handleBlurMock = jest.fn()
-const handleActivateMock = jest.fn()
+const generateActivateCallbackMock = jest.fn()
 
 describe('applyConfig', () => {
   describe('with default config', () => {
@@ -62,9 +62,13 @@ describe('applyConfig', () => {
   })
 })
 
-describe('handleActivate', () => {
-  it('shows the windows', () => {
-    handleActivate(app)
+describe('generateActivateCallback', () => {
+  it('returns a function', () => {
+    expect(generateActivateCallback(app)).toBeInstanceOf(Function)
+  })
+
+  it('resulting callback shows the windows', () => {
+    generateActivateCallback(app)()
 
     expect(showWindows).toHaveBeenCalledTimes(1)
   })
@@ -73,7 +77,7 @@ describe('handleActivate', () => {
 describe('onApp', () => {
   describe('with default config', () => {
     beforeEach(() => {
-      onApp(app, handleBlurMock, handleActivateMock)
+      onApp(app, handleBlurMock, generateActivateCallbackMock)
     })
 
     it('handles the activate event', () => {
