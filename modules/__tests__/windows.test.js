@@ -1,4 +1,4 @@
-const { handleBlur, hideWindows, showWindows } = require('../windows')
+const { generateBlurCallback, hideWindows, showWindows } = require('../windows')
 const { generateWindow, generateWindowSet } = require('../../fixtures/windowSet')
 const { generateApp } = require('../../fixtures/app')
 
@@ -8,27 +8,21 @@ const app = generateApp()
 let callback, win
 let set = generateWindowSet(2)
 
-describe('handleBlur', () => {
+describe('generateBlurCallback', () => {
   beforeAll(() => {
     callback = jest.fn()
     app.getWindows.mockReturnValue(set)
   })
 
   it('returns a function', () => {
-    expect(handleBlur()).toEqual(
-      expect.any(Function)
-    )
-  })
-
-  it('returns a second function', () => {
-    expect(handleBlur()(callback)).toEqual(
+    expect(generateBlurCallback(callback)).toEqual(
       expect.any(Function)
     )
   })
 
   describe('when no focused windows', () => {
     it('executes the callback', () => {
-      handleBlur()(callback)(app)
+      generateBlurCallback(callback)(app)()
 
       jest.runAllTimers()
 
@@ -48,7 +42,7 @@ describe('handleBlur', () => {
     })
 
     it('does not execute the callback', () => {
-      handleBlur()(callback)(app)
+      generateBlurCallback(callback)(app)()
 
       jest.runAllTimers()
 

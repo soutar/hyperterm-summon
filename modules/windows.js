@@ -2,15 +2,17 @@ const { debounce } = require('lodash')
 
 let lastFocusedWindow
 
-exports.handleBlur = (timeout = 100) => callback => debounce(app => {
-  const focusedWindows = [...app.getWindows()].some(w => w.isFocused())
+exports.generateBlurCallback = callback => app => (
+  debounce(() => {
+    const focusedWindows = [...app.getWindows()].some(w => w.isFocused())
 
-  if (focusedWindows) {
-    return false
-  }
+    if (focusedWindows) {
+      return false
+    }
 
-  callback(app)
-}, timeout)
+    callback(app)
+  }, 100)
+)
 
 exports.hideWindows = app => {
   lastFocusedWindow = app.getLastFocusedWindow()
