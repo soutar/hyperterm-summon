@@ -1,9 +1,13 @@
-const addWindow = require('./modules/windows').addWindow;
-const setup = require('./modules/setup');
+const dispose = require('./modules/dispose')
+const { generateActivateCallback, onApp } = require('./modules/app')
+const { generateBlurCallback, hideWindows, showWindows } = require('./modules/windows')
 
-const windowSet = new Set([]);
+let handleActivate, handleBlur
 
-module.exports = {
-  onApp: app => setup(app, windowSet),
-  onWindow: window => addWindow(window, windowSet)
+exports.onApp = app => {
+  handleBlur = generateBlurCallback(hideWindows)(app)
+  handleActivate = generateActivateCallback(showWindows)(app)
+
+  onApp(app, handleActivate, handleBlur)
 }
+exports.onUnload = app => dispose(app, handleActivate, handleBlur)

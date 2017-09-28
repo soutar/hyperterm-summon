@@ -1,3 +1,3 @@
-registerShortcut = () => jest.fn()
-
-module.exports = registerShortcut
+module.exports = jest.fn(
+  () => jest.fn()
+)

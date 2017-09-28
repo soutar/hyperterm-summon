@@ -1,64 +1,55 @@
-function showWindows (windows, app) {
-  if (windows.length === 0) {
-    app.createWindow();
-  } else {
-    windows.forEach((win, index) => {
-      if (index === windows.length - 1) {
-        win.show();
-        win.focus();
-      } else {
-        win.show();
-      }
-    });
+const { debounce } = require('lodash')
+
+let lastFocusedWindow
+
+exports.generateBlurCallback = callback => app => (
+  debounce(() => {
+    const focusedWindows = [...app.getWindows()].some(w => w.isFocused())
+
+    if (focusedWindows) {
+      return false
+    }
+
+    callback(app)
+  }, 100)
+)
+
+exports.hideWindows = app => {
+  const visibleWindows = [...app.getWindows()].filter(w => w.isVisible())
+
+  if (!visibleWindows.length) {
+    return false
   }
 
-  if (process.platform !== 'win32') {
-    app.show();
-  }
-}
+  lastFocusedWindow = app.getLastFocusedWindow()
 
-function hideWindows (windows, app) {
-  windows.forEach(win => {
-    if (win.isFullScreen()) {
-      return;
+  visibleWindows.forEach(w => {
+    if (w.isFullScreen()) {
+      return
     }
 
     process.platform === 'win32'
-      ? win.minimize()
-      : win.hide();
-  });
+      ? w.minimize()
+      : w.hide()
+  })
 
-  // Re-focuses the last active app for macOS only
-  if (process.platform === 'darwin') {
-    app.hide();
+  if (typeof app.hide === 'function') {
+    app.hide()
   }
 }
 
-function toggleWindowVisibility (app, windowSet) {
-  const windows = [...windowSet];
-  const focusedWindows = windows.filter(window => window.isFocused());
+exports.showWindows = app => {
+  const windows = [...app.getWindows()]
 
-  focusedWindows.length > 0
-    ? hideWindows(windows, app)
-    : showWindows(windows, app);
-}
+  windows.length === 0
+    ? app.createWindow()
+    : windows.forEach(w => w.show())
 
-function addWindow (window, windowSet) {
-  windowSet.add(window);
+  if (lastFocusedWindow) {
+    lastFocusedWindow.focus()
+  }
 
-  window.on('focus', () => {
-    windowSet.delete(window);
-    windowSet.add(window);
-  });
-
-  window.on('close', () => {
-    windowSet.delete(window);
-  });
-}
-
-module.exports = {
-  addWindow,
-  hideWindows,
-  showWindows,
-  toggleWindowVisibility
+  if (typeof app.show === 'function') {
+    app.show()
+  }
 }
