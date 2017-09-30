@@ -45,7 +45,7 @@ exports.showWindows = app => {
     ? app.createWindow()
     : windows.forEach(w => w.show())
 
-  if (lastFocusedWindow) {
+  if (lastFocusedWindow && !lastFocusedWindow.isDestroyed()) {
     lastFocusedWindow.focus()
   }
 
