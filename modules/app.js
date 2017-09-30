@@ -16,9 +16,11 @@ const applyConfig = (app, handleBlur) => {
     ? app.dock.hide()
     : app.dock.show()
 
-  config.hideOnBlur
-    ? app.on('browser-window-blur', handleBlur)
-    : app.removeListener('browser-window-blur', handleBlur)
+  if (!config.hideOnBlur) {
+    app.removeListener('browser-window-blur', handleBlur)
+  } else if (!app.listeners('browser-window-blur').includes(handleBlur)) {
+    app.on('browser-window-blur', handleBlur)
+  }
 }
 
 const generateActivateCallback = callback => app => event => callback(app)

@@ -11,6 +11,7 @@ exports.generateApp = () => ({
   getLastFocusedWindow: jest.fn(),
   getWindows: jest.fn(() => new Set()),
   hide: jest.fn(),
+  listeners: jest.fn(() => []),
   on: jest.fn(),
   removeListener: jest.fn(),
   show: jest.fn()

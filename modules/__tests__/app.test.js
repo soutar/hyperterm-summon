@@ -53,11 +53,32 @@ describe('applyConfig', () => {
           hideOnBlur: true
         }
       })
-      applyConfig(app, handleBlurMock)
     })
 
-    it('handles blur events', () => {
-      expect(app.on).toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
+    afterEach(() => {
+      Array.prototype.includes.mockRestore()
+    })
+
+    describe('with no previous handler', () => {
+      beforeEach(() => {
+        jest.spyOn(Array.prototype, 'includes').mockReturnValue(false)
+        applyConfig(app, handleBlurMock)
+      })
+
+      it('adds blur handler', () => {
+        expect(app.on).toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
+      })
+    })
+
+    describe('with previous handler', () => {
+      beforeEach(() => {
+        jest.spyOn(Array.prototype, 'includes').mockReturnValue(true)
+        applyConfig(app, handleBlurMock)
+      })
+
+      it('does not add handler', () => {
+        expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
+      })
     })
   })
 })
