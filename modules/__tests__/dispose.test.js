@@ -1,8 +1,10 @@
 const dispose = require('../dispose')
 const { generateApp } = require('../../fixtures/app')
+const { showWindows } = require('../windows')
 // const { unregisterShortcut } = require('hyperterm-register-shortcut')
 
 // jest.mock('hyperterm-register-shortcut')
+jest.mock('../windows')
 
 const app = generateApp()
 const handleActivateMock = jest.fn()
@@ -11,6 +13,10 @@ const handleBlurMock = jest.fn()
 describe('dispose', () => {
   beforeEach(() => {
     dispose(app, handleActivateMock, handleBlurMock)
+  })
+
+  it('shows all windows', () => {
+    expect(showWindows).toHaveBeenCalledTimes(1)
   })
 
   it('shows the dock icon', () => {
