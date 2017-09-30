@@ -10,6 +10,7 @@ const DEFAULTS = {
 const applyConfig = (app, handleBlur) => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon)
 
+  // TODO: Unregister prior to registering when supported
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app)
 
   config.hideDock
@@ -28,6 +29,7 @@ const generateActivateCallback = callback => app => event => callback(app)
 const onApp = (app, handleActivate, handleBlur) => {
   app.on('activate', handleActivate)
   applyConfig(app, handleBlur)
+  // TODO: Is there a way to unsubscribe within dispose?
   app.config.subscribe(() => applyConfig(app, handleBlur))
 }
 
