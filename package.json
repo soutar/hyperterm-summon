@@ -1,6 +1,6 @@
 {
   "name": "hyperterm-summon",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Summon your Hyperterm windows with a system-wide hotkey",
   "main": "index.js",
   "repository": {
