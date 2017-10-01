@@ -29,8 +29,7 @@ const generateActivateCallback = callback => app => event => callback(app)
 const onApp = (app, handleActivate, handleBlur) => {
   app.on('activate', handleActivate)
   applyConfig(app, handleBlur)
-  // TODO: Is there a way to unsubscribe within dispose?
-  app.config.subscribe(() => applyConfig(app, handleBlur))
+  return app.config.subscribe(() => applyConfig(app, handleBlur))
 }
 
 module.exports = {

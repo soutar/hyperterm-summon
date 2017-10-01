@@ -9,10 +9,18 @@ jest.mock('../windows')
 const app = generateApp()
 const handleActivateMock = jest.fn()
 const handleBlurMock = jest.fn()
+const cfgUnsubscribeMock = jest.fn()
 
 describe('dispose', () => {
   beforeEach(() => {
-    dispose(app, handleActivateMock, handleBlurMock)
+    dispose(
+      app,
+      {
+        cfgUnsubscribe: cfgUnsubscribeMock,
+        handleActivate: handleActivateMock,
+        handleBlur: handleBlurMock
+      }
+    )
   })
 
   it('shows all windows', () => {
@@ -21,6 +29,10 @@ describe('dispose', () => {
 
   it('shows the dock icon', () => {
     expect(app.dock.show).toHaveBeenCalledTimes(1)
+  })
+
+  it('unsubscribes from config changes', () => {
+    expect(cfgUnsubscribeMock).toHaveBeenCalledTimes(1)
   })
 
   xit('unregisters the shortcut', () => {
