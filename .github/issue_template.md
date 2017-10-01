@@ -21,5 +21,17 @@
 - **Link of a [Gist](https://gist.github.com/) with the contents of your .hyper.js**: <!-- Gist Link Here -->
 - **Relevant information from devtools** _(CMD+ALT+I on Mac OS, CTRL+SHIFT+I elsewhere)_: <!-- Replace with info if applicable, or N/A -->
 
+---
+
 ## Issue
-<!-- Now feel free to write your issue, but please be descriptive! If you can, please list steps to reproduce the issue. Thanks again 🙌 ❤️ -->
+<!-- Now feel free to write your issue, but please be descriptive! If you can, please list steps to reproduce the issue below. Thanks again! 🙌 ❤️ -->
+
+### Steps to Reproduce
+1. <!-- Step one... -->
+2. <!-- Step two... -->
+
+### Expected Result
+<!-- What did you expect to see? -->
+
+### Actual Result
+<!-- What did you actually see? -->
