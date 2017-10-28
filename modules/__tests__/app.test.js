@@ -33,11 +33,7 @@ describe('applyConfig', () => {
 
   describe('with hideDock config enabled', () => {
     beforeEach(() => {
-      app.config.getConfig.mockReturnValue({
-        summon: {
-          hideDock: true
-        }
-      })
+      app.config.getConfig.mockReturnValue({ summon: { hideDock: true } })
       applyConfig(app, handleBlurMock)
     })
 
@@ -79,6 +75,13 @@ describe('applyConfig', () => {
       it('does not add handler', () => {
         expect(app.on).not.toHaveBeenCalledWith('browser-window-blur', handleBlurMock)
       })
+    })
+  })
+
+  describe('when dock is undefined', () => {
+    it('does not throw error', () => {
+      const appMock = generateApp({ dock: undefined })
+      expect(() => applyConfig(appMock, handleBlurMock)).not.toThrow()
     })
   })
 })
