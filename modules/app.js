@@ -13,9 +13,11 @@ const applyConfig = (app, handleBlur) => {
   // TODO: Unregister prior to registering when supported
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app)
 
-  config.hideDock
-    ? app.dock.hide()
-    : app.dock.show()
+  if (app.dock) {
+    config.hideDock
+      ? app.dock.hide()
+      : app.dock.show()
+  }
 
   if (!config.hideOnBlur) {
     app.removeListener('browser-window-blur', handleBlur)
