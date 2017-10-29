@@ -1,14 +1,16 @@
 const generateWindowSet = (count, opts = {}) => {
-  const windows = []
+  const windows = [];
 
   for (var i = 0; i < count; i++) {
-    windows.push(generateWindow(opts))
+    windows.push(generateWindow(opts));
   }
 
-  return new Set(windows)
-}
+  return new Set(windows);
+};
 
-const generateWindow = ({ focused = false, fullScreen = false, visible = true } = {}) => ({
+const generateWindow = (
+  { focused = false, fullScreen = false, visible = true } = {}
+) => ({
   focus: jest.fn(),
   hide: jest.fn(),
   isFocused: jest.fn(() => focused),
@@ -16,10 +18,10 @@ const generateWindow = ({ focused = false, fullScreen = false, visible = true } 
   isVisible: jest.fn(() => visible),
   minimize: jest.fn(),
   on: jest.fn(),
-  show: jest.fn()
-})
+  show: jest.fn(),
+});
 
 module.exports = {
   generateWindow,
-  generateWindowSet
-}
+  generateWindowSet,
+};

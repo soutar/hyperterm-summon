@@ -8,6 +8,9 @@
     "url": "https://github.com/Soutar/hyperterm-summon.git"
   },
   "scripts": {
+    "lint": "eslint '{index,{__mocks__,fixtures,modules}/**/*}.js'",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "test": "jest"
   },
   "keywords": [
@@ -27,37 +30,20 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
-    "standard": "^10.0.3"
+    "lint-staged": "^4.2.3",
+    "prettier": "^1.7.4"
   },
   "peerDependencies": {
     "electron": "^1.6.2"
-  },
-  "jest": {
-    "clearMocks": true,
-    "coveragePathIgnorePatterns": [
-      "/node_modules",
-      "<rootDir>/(fixtures)/"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "<rootDir>/utils/test.js"
-    ]
-  },
-  "standard": {
-    "globals": [
-      "afterAll",
-      "afterEach",
-      "beforeAll",
-      "beforeEach",
-      "describe",
-      "expect",
-      "fdescribe",
-      "fit",
-      "it",
-      "jest",
-      "xdescribe",
-      "xit"
-    ]
   }
 }

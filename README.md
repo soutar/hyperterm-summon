@@ -1,6 +1,6 @@
 # hyperterm-summon
 [![Build Status](https://travis-ci.org/soutar/hyperterm-summon.svg?branch=master)](https://travis-ci.org/soutar/hyperterm-summon)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 Summon your Hyper windows with a system-wide hotkey.
 

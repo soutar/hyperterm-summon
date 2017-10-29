@@ -1,55 +1,50 @@
-const { debounce } = require('lodash')
+const { debounce } = require('lodash');
 
-let lastFocusedWindow
+let lastFocusedWindow;
 
-exports.generateBlurCallback = callback => app => (
+exports.generateBlurCallback = callback => app =>
   debounce(() => {
-    const focusedWindows = [...app.getWindows()].some(w => w.isFocused())
+    const focusedWindows = [...app.getWindows()].some(w => w.isFocused());
 
     if (focusedWindows) {
-      return false
+      return false;
     }
 
-    callback(app)
-  }, 100)
-)
+    callback(app);
+  }, 100);
 
 exports.hideWindows = app => {
-  const visibleWindows = [...app.getWindows()].filter(w => w.isVisible())
+  const visibleWindows = [...app.getWindows()].filter(w => w.isVisible());
 
   if (!visibleWindows.length) {
-    return false
+    return false;
   }
 
-  lastFocusedWindow = app.getLastFocusedWindow()
+  lastFocusedWindow = app.getLastFocusedWindow();
 
   visibleWindows.forEach(w => {
     if (w.isFullScreen()) {
-      return
+      return;
     }
 
-    process.platform === 'win32'
-      ? w.minimize()
-      : w.hide()
-  })
+    process.platform === 'win32' ? w.minimize() : w.hide();
+  });
 
   if (typeof app.hide === 'function') {
-    app.hide()
+    app.hide();
   }
-}
+};
 
 exports.showWindows = app => {
-  const windows = [...app.getWindows()]
+  const windows = [...app.getWindows()];
 
-  windows.length === 0
-    ? app.createWindow()
-    : windows.forEach(w => w.show())
+  windows.length === 0 ? app.createWindow() : windows.forEach(w => w.show());
 
   if (lastFocusedWindow && !lastFocusedWindow.isDestroyed()) {
-    lastFocusedWindow.focus()
+    lastFocusedWindow.focus();
   }
 
   if (typeof app.show === 'function') {
-    app.show()
+    app.show();
   }
-}
+};
