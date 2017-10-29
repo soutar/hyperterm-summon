@@ -1,6 +1,8 @@
 const { debounce } = require('lodash');
 
-let lastFocusedWindow;
+const isFocused = function(w) {
+  return w === this.getLastFocusedWindow();
+};
 
 exports.generateBlurCallback = callback => app =>
   debounce(() => {
@@ -20,9 +22,7 @@ exports.hideWindows = app => {
     return false;
   }
 
-  lastFocusedWindow = app.getLastFocusedWindow();
-
-  visibleWindows.forEach(w => {
+  visibleWindows.sort(isFocused.bind(app)).forEach(w => {
     if (w.isFullScreen()) {
       return;
     }
@@ -36,13 +36,9 @@ exports.hideWindows = app => {
 };
 
 exports.showWindows = app => {
-  const windows = [...app.getWindows()];
+  const windows = [...app.getWindows()].sort(isFocused.bind(app));
 
   windows.length === 0 ? app.createWindow() : windows.forEach(w => w.show());
-
-  if (lastFocusedWindow && !lastFocusedWindow.isDestroyed()) {
-    lastFocusedWindow.focus();
-  }
 
   if (typeof app.show === 'function') {
     app.show();
