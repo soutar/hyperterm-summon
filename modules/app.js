@@ -26,10 +26,10 @@ const applyConfig = (app, handleBlur) => {
 
 const generateActivateCallback = callback => app => event => callback(app);
 
-const onApp = (app, handleActivate, handleBlur) => {
+const onApp = (app, callback, handleActivate) => {
   app.on('activate', handleActivate);
-  applyConfig(app, handleBlur);
-  return app.config.subscribe(() => applyConfig(app, handleBlur));
+  callback();
+  return app.config.subscribe(callback);
 };
 
 module.exports = {

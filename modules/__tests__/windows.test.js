@@ -143,9 +143,19 @@ describe('hideWindows', () => {
       expect([...set][0].hide).toHaveBeenCalledTimes(1);
       expect([...set][1].hide).toHaveBeenCalledTimes(1);
     });
+  });
 
+  describe('on supported platforms', () => {
     it('hides the app', () => {
+      hideWindows(app);
       expect(app.hide).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('on unsupported platforms', () => {
+    it('does not throw an error', () => {
+      app.hide = null;
+      expect(() => hideWindows(app)).not.toThrowError();
     });
   });
 });
@@ -193,6 +203,13 @@ describe('showWindows', () => {
       showWindows(app);
 
       expect(app.show).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('on unsupported platforms', () => {
+    it('does not throw an error', () => {
+      app.show = null;
+      expect(() => showWindows(app)).not.toThrowError();
     });
   });
 });

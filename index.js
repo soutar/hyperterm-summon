@@ -1,5 +1,9 @@
 const dispose = require('./modules/dispose');
-const { generateActivateCallback, onApp } = require('./modules/app');
+const {
+  applyConfig,
+  generateActivateCallback,
+  onApp,
+} = require('./modules/app');
 const {
   generateBlurCallback,
   hideWindows,
@@ -11,9 +15,13 @@ let cfgUnsubscribe, handleActivate, handleBlur;
 exports.onApp = app => {
   handleBlur = generateBlurCallback(hideWindows)(app);
   handleActivate = generateActivateCallback(showWindows)(app);
-
-  cfgUnsubscribe = onApp(app, handleActivate, handleBlur);
+  cfgUnsubscribe = onApp(
+    app,
+    applyConfig.bind(this,app, handleBlur),
+    handleActivate
+  );
 };
 
-exports.onUnload = app =>
+exports.onUnload = app => {
   dispose(app, { cfgUnsubscribe, handleActivate, handleBlur });
+};
