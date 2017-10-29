@@ -17,7 +17,7 @@ exports.onApp = app => {
   handleActivate = generateActivateCallback(showWindows)(app);
   cfgUnsubscribe = onApp(
     app,
-    applyConfig.bind(this,app, handleBlur),
+    applyConfig.bind(this, app, handleBlur),
     handleActivate
   );
 };

@@ -67,7 +67,10 @@ describe('dispose', () => {
         cfgUnsubscribe: cfgUnsubscribeMock,
         handleBlur: handleBlurMock,
       });
-      expect(app.removeListener).not.toHaveBeenCalledWith('activate', undefined);
+      expect(app.removeListener).not.toHaveBeenCalledWith(
+        'activate',
+        undefined
+      );
     });
   });
 

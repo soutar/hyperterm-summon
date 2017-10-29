@@ -114,7 +114,7 @@ describe('generateActivateCallback', () => {
 describe('onApp', () => {
   describe('with default config', () => {
     beforeEach(() => {
-      callback = jest.fn()
+      callback = jest.fn();
       onApp(app, callback, handleBlurMock, generateActivateCallbackMock);
     });
 
@@ -123,8 +123,8 @@ describe('onApp', () => {
     });
 
     it('executes the callback', () => {
-      expect(callback).toHaveBeenCalledTimes(1)
-    })
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
 
     it('subscribes to config change', () => {
       expect(app.config.subscribe).toHaveBeenCalledWith(callback);
