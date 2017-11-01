@@ -86,4 +86,11 @@ describe('dispose', () => {
       );
     });
   });
+
+  describe('on unsupported platforms', () => {
+    it('does not show the dock', () => {
+      app.dock = undefined;
+      expect(() => dispose(app)).not.toThrow();
+    });
+  });
 });
