@@ -14,7 +14,12 @@ const applyConfig = (app, handleBlur) => {
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app);
 
   if (app.dock) {
-    config.hideDock ? app.dock.hide() : app.dock.show();
+    // Set timeout to ensure any concurrent hide/show invocation (e.g. onUnload)
+    // concludes prior to invoking again. Competing invocations occur during the
+    // Hyper plugin update process.
+    setTimeout(() => {
+      config.hideDock ? app.dock.hide() : app.dock.show();
+    }, 0);
   }
 
   if (!config.hideOnBlur) {

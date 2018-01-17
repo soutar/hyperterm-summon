@@ -7,6 +7,8 @@ jest.mock('../toggle');
 jest.mock('../windows');
 jest.mock('hyperterm-register-shortcut');
 
+jest.useFakeTimers();
+
 let app = generateApp();
 let callback;
 const handleBlurMock = jest.fn();
@@ -22,8 +24,8 @@ describe('applyConfig', () => {
       expect(registerShortcut).toHaveBeenCalledWith('summon', toggle, 'Ctrl+;');
     });
 
-    it('shows the dock', () => {
-      expect(app.dock.show).toHaveBeenCalled();
+    it('does not show the dock', () => {
+      expect(app.dock.show).not.toHaveBeenCalled();
     });
 
     it('does not handle blur events', () => {
@@ -31,6 +33,13 @@ describe('applyConfig', () => {
         'browser-window-blur',
         handleBlurMock
       );
+    });
+
+    describe('after timeout', () => {
+      it('shows the dock', () => {
+        jest.runAllTimers();
+        expect(app.dock.show).toHaveBeenCalled();
+      });
     });
   });
 
@@ -40,8 +49,15 @@ describe('applyConfig', () => {
       applyConfig(app, handleBlurMock);
     });
 
-    it('hides the dock', () => {
-      expect(app.dock.hide).toHaveBeenCalled();
+    it('does not hide the dock', () => {
+      expect(app.dock.hide).not.toHaveBeenCalled();
+    });
+
+    describe('after timeout', () => {
+      it('hides the dock', () => {
+        jest.runAllTimers();
+        expect(app.dock.hide).toHaveBeenCalled();
+      });
     });
   });
 
