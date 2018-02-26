@@ -1,9 +1,11 @@
 const dispose = require('../dispose');
+const setVisibility = require('../setVisibility');
 const { generateApp } = require('../../fixtures/app');
 const { showWindows } = require('../windows');
 // const { unregisterShortcut } = require('hyperterm-register-shortcut')
 
 // jest.mock('hyperterm-register-shortcut')
+jest.mock('../setVisibility');
 jest.mock('../windows');
 
 const app = generateApp();
@@ -24,8 +26,8 @@ describe('dispose', () => {
     expect(showWindows).toHaveBeenCalledTimes(1);
   });
 
-  it('shows the dock icon', () => {
-    expect(app.dock.show).toHaveBeenCalledTimes(1);
+  it('sets dock visibility', () => {
+    expect(setVisibility).toHaveBeenCalled();
   });
 
   it('unsubscribes from config changes', () => {

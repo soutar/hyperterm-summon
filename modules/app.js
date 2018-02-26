@@ -1,4 +1,5 @@
 const registerShortcut = require('hyperterm-register-shortcut');
+const setVisibility = require('./setVisibility');
 const toggle = require('./toggle');
 
 const DEFAULTS = {
@@ -13,14 +14,7 @@ const applyConfig = (app, handleBlur) => {
   // TODO: Unregister prior to registering when supported
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app);
 
-  if (app.dock) {
-    // Set timeout to ensure any concurrent hide/show invocation (e.g. onUnload)
-    // concludes prior to invoking again. Competing invocations occur during the
-    // Hyper plugin update process.
-    setTimeout(() => {
-      config.hideDock ? app.dock.hide() : app.dock.show();
-    }, 0);
-  }
+  setVisibility(app.dock, { hide: config.hideDock });
 
   if (!config.hideOnBlur) {
     app.removeListener('browser-window-blur', handleBlur);
