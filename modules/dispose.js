@@ -5,9 +5,6 @@ module.exports = (app, callbacks = {}) => {
   const { cfgUnsubscribe, handleActivate, handleBlur } = callbacks;
 
   showWindows(app);
-  if (app.dock) {
-    app.dock.show();
-  }
   // TODO: Unregister shortcut when supported
   // unregisterShortcut()
 
