@@ -24,10 +24,6 @@ describe('dispose', () => {
     expect(showWindows).toHaveBeenCalledTimes(1);
   });
 
-  it('shows the dock icon', () => {
-    expect(app.dock.show).toHaveBeenCalledTimes(1);
-  });
-
   it('unsubscribes from config changes', () => {
     expect(cfgUnsubscribeMock).toHaveBeenCalledTimes(1);
   });
