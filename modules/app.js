@@ -1,4 +1,5 @@
 const registerShortcut = require('hyperterm-register-shortcut');
+const setVisibility = require('./setVisibility');
 const toggle = require('./toggle');
 
 const DEFAULTS = {
@@ -13,9 +14,7 @@ const applyConfig = (app, handleBlur) => {
   // TODO: Unregister prior to registering when supported
   registerShortcut('summon', toggle, DEFAULTS.hotkey)(app);
 
-  if (app.dock) {
-    config.hideDock ? app.dock.hide() : app.dock.show();
-  }
+  setVisibility(app.dock, { hide: config.hideDock });
 
   if (!config.hideOnBlur) {
     app.removeListener('browser-window-blur', handleBlur);

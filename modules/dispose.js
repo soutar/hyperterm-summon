@@ -1,13 +1,12 @@
 // const { unregisterShortcut } = require('hyperterm-register-shortcut')
+const setVisibility = require('./setVisibility');
 const { showWindows } = require('./windows');
 
 module.exports = (app, callbacks = {}) => {
   const { cfgUnsubscribe, handleActivate, handleBlur } = callbacks;
 
   showWindows(app);
-  if (app.dock) {
-    app.dock.show();
-  }
+  setVisibility(app.dock, { hide: false });
   // TODO: Unregister shortcut when supported
   // unregisterShortcut()
 

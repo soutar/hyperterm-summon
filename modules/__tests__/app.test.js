@@ -1,11 +1,15 @@
 const registerShortcut = require('hyperterm-register-shortcut');
+const setVisibility = require('../setVisibility');
 const toggle = require('../toggle');
 const { applyConfig, generateActivateCallback, onApp } = require('../app');
 const { generateApp } = require('../../fixtures/app');
 
 jest.mock('../toggle');
 jest.mock('../windows');
+jest.mock('../setVisibility');
 jest.mock('hyperterm-register-shortcut');
+
+jest.useFakeTimers();
 
 let app = generateApp();
 let callback;
@@ -22,8 +26,8 @@ describe('applyConfig', () => {
       expect(registerShortcut).toHaveBeenCalledWith('summon', toggle, 'Ctrl+;');
     });
 
-    it('shows the dock', () => {
-      expect(app.dock.show).toHaveBeenCalled();
+    it('sets dock visibility', () => {
+      expect(setVisibility).toHaveBeenCalled();
     });
 
     it('does not handle blur events', () => {
@@ -40,8 +44,8 @@ describe('applyConfig', () => {
       applyConfig(app, handleBlurMock);
     });
 
-    it('hides the dock', () => {
-      expect(app.dock.hide).toHaveBeenCalled();
+    it('sets dock visibility', () => {
+      expect(setVisibility).toHaveBeenCalled();
     });
   });
 

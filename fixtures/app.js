@@ -8,6 +8,7 @@ exports.generateApp = opts =>
       createWindow: jest.fn(),
       dock: {
         hide: jest.fn(),
+        isVisible: jest.fn(() => true),
         show: jest.fn(),
       },
       getLastFocusedWindow: jest.fn(),
