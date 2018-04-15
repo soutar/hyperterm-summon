@@ -1,6 +1,5 @@
 const dispose = require('../dispose');
 const { generateApp } = require('../../fixtures/app');
-const { showWindows } = require('../windows');
 // const { unregisterShortcut } = require('hyperterm-register-shortcut')
 
 // jest.mock('hyperterm-register-shortcut')
@@ -18,10 +17,6 @@ describe('dispose', () => {
       handleActivate: handleActivateMock,
       handleBlur: handleBlurMock,
     });
-  });
-
-  it('shows all windows', () => {
-    expect(showWindows).toHaveBeenCalledTimes(1);
   });
 
   it('unsubscribes from config changes', () => {
