@@ -10,11 +10,14 @@
   "scripts": {
     "lint": "eslint '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "precommit": "lint-staged",
-    "prettier": "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
+    "prettier":
+      "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "test": "jest"
   },
   "keywords": [
-    "hyperterm",
+    "hyper",
+    "hyper.app",
+    "hyper-plugin",
     "plugin",
     "hotkey",
     "shortcut",
