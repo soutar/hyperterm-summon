@@ -1,6 +1,6 @@
 {
   "name": "hyperterm-summon",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Summon your Hyperterm windows with a system-wide hotkey",
   "main": "index.js",
   "repository": {
@@ -10,8 +10,7 @@
   "scripts": {
     "lint": "eslint '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "precommit": "lint-staged",
-    "prettier":
-      "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
+    "prettier": "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "test": "jest"
   },
   "keywords": [
