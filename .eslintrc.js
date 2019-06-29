@@ -1,15 +1,8 @@
 module.exports = {
-  extends: [
-    'standard',
-    'prettier',
-    'prettier/standard'
-  ],
+  extends: ['standard', 'prettier', 'prettier/standard'],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': [
-      'error',
-      { 'singleQuote': true, 'trailingComma': 'es5' }
-    ]
+    'prettier/prettier': ['error', { singleQuote: true, trailingComma: 'es5' }],
   },
   globals: {
     afterAll: true,
@@ -23,6 +16,6 @@ module.exports = {
     it: true,
     jest: true,
     xdescribe: true,
-    xit: true
-  }
-}
+    xit: true,
+  },
+};

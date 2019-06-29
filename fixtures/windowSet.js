@@ -8,9 +8,11 @@ const generateWindowSet = (count, opts = {}) => {
   return new Set(windows);
 };
 
-const generateWindow = (
-  { focused = false, fullScreen = false, visible = true } = {}
-) => ({
+const generateWindow = ({
+  focused = false,
+  fullScreen = false,
+  visible = true,
+} = {}) => ({
   focus: jest.fn(),
   hide: jest.fn(),
   isFocused: jest.fn(() => focused),

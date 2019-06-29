@@ -23,7 +23,7 @@ jest.mock('../modules/windows', () => ({
   generateBlurCallback: jest.fn(() => jest.fn()),
 }));
 
-jest.mock('../modules/dispose')
+jest.mock('../modules/dispose');
 
 const app = generateApp();
 
@@ -51,10 +51,10 @@ describe('onApp', () => {
 
 describe('onUnload', () => {
   beforeEach(() => {
-    onUnload(app)
-  })
+    onUnload(app);
+  });
 
   it('executes dispose', () => {
-    expect(dispose).toHaveBeenCalledTimes(1)
-  })
-})
+    expect(dispose).toHaveBeenCalledTimes(1);
+  });
+});

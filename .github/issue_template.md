@@ -7,6 +7,7 @@
 -->
 
 <!-- Checked checkbox should look like this: [x] -->
+
 - [ ] I am on the [latest](https://github.com/soutar/hyperterm-summon/releases/latest) hyperterm-summon version
 - [ ] I have searched the [issues](https://github.com/soutar/hyperterm-summon/issues) of this repo and believe that this is not a duplicate
 
@@ -24,14 +25,18 @@
 ---
 
 ## Issue
+
 <!-- Now feel free to write your issue, but please be descriptive! If you can, please list steps to reproduce the issue below. Thanks again! 🙌 ❤️ -->
 
 ### Steps to Reproduce
+
 1. <!-- Step one... -->
 2. <!-- Step two... -->
 
 ### Expected Result
+
 <!-- What did you expect to see? -->
 
 ### Actual Result
+
 <!-- What did you actually see? -->
