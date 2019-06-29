@@ -8,9 +8,9 @@
     "url": "https://github.com/Soutar/hyperterm-summon.git"
   },
   "scripts": {
+    "format": "prettier '**/*.{css,md,js,json}' --write",
     "lint": "eslint '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "precommit": "lint-staged",
-    "prettier": "prettier --write '{index,{__mocks__,fixtures,modules}/**/*}.js'",
     "test": "jest"
   },
   "keywords": [
