@@ -121,41 +121,44 @@ describe('hideWindows', () => {
     });
   });
 
-  describe('in windows', () => {
-    it('minimizes windows', () => {
-      process.platform = 'win32';
-      hideWindows(app);
-
-      expect([...set][0].minimize).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('in macOS', () => {
-    beforeAll(() => {
-      process.platform = 'darwin';
-    });
-
-    beforeEach(() => {
-      hideWindows(app);
-    });
-
+  describe('when hiding window supported', () => {
     it('hides windows', () => {
+      hideWindows(app);
       expect([...set][0].hide).toHaveBeenCalledTimes(1);
       expect([...set][1].hide).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('on supported platforms', () => {
+  describe('when hiding window unsupported', () => {
+    it('minimizes windows', () => {
+      let originalImplementation;
+      set.forEach(w => {
+        originalImplementation = w.hide;
+        w.hide = null;
+      });
+      hideWindows(app);
+
+      expect([...set][0].minimize).toHaveBeenCalledTimes(1);
+
+      set.forEach(w => {
+        w.hide = originalImplementation;
+      });
+    });
+  });
+
+  describe('when hiding app supported', () => {
     it('hides the app', () => {
       hideWindows(app);
       expect(app.hide).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('on unsupported platforms', () => {
+  describe('when hiding app unsupported', () => {
     it('does not throw an error', () => {
+      const originalImplementation = app.hide;
       app.hide = null;
       expect(() => hideWindows(app)).not.toThrowError();
+      app.hide = originalImplementation;
     });
   });
 });

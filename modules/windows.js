@@ -27,7 +27,11 @@ exports.hideWindows = app => {
       return;
     }
 
-    process.platform === 'win32' ? w.minimize() : w.hide();
+    if (typeof w.hide === 'function') {
+      w.hide();
+    } else {
+      w.minimize();
+    }
   });
 
   if (typeof app.hide === 'function') {
