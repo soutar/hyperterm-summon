@@ -23,11 +23,11 @@ hyper i hyperterm-summon
 
 ## Options
 
-| Key          | Description                                                   | Default  |
-| ------------ | ------------------------------------------------------------- | -------- |
-| `hideDock`   | Hide the Hyper icon in the dock and app switcher.             | `false`  |
-| `hideOnBlur` | Hide Hyper when the windows lose focus.                       | `false`  |
-| `hotkey`     | Shortcut<sup>[1](#1)</sup> to toggle Hyper window visibility. | `Ctrl+;` |
+| Key          | Description                                             | Default  |
+| ------------ | ------------------------------------------------------- | -------- |
+| `hideDock`   | Hide the Hyper icon in the dock and app switcher.       | `false`  |
+| `hideOnBlur` | Hide Hyper when the windows lose focus.                 | `false`  |
+| `hotkey`     | Shortcut<sup>1</sup> to toggle Hyper window visibility. | `Ctrl+;` |
 
 ## Example Config
 
@@ -44,4 +44,4 @@ module.exports = {
 };
 ```
 
-<sup>[1](#1)</sup> For a list of valid shortcuts, see [Electron Accelerators](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
+<sup>1</sup> For a list of valid shortcuts, see [Electron Accelerators](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
