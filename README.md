@@ -14,7 +14,7 @@ regain focus.
 
 ## Installation
 
-Use the hyper command, bundled with your Hyper app, to install hyperterm-summon
+Use the Hyper CLI, bundled with your Hyper app, to install hyperterm-summon
 by entering the following into Hyper:
 
 ```bash
@@ -23,13 +23,11 @@ hyper i hyperterm-summon
 
 ## Options
 
-| Key          | Description                                       | Default  |
-| ------------ | ------------------------------------------------- | -------- |
-| `hideDock`   | Hide the Hyper icon in the dock and app switcher. | `false`  |
-| `hideOnBlur` | Hide the Hyper when window loses focus.           | `false`  |
-| `hotkey`     | Shortcut to toggle Hyper window visibility.       | `Ctrl+;` |
-
-_NOTE:_ For a list of valid shortcuts, see [Electron Accelerators](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
+| Key          | Description                                             | Default  |
+| ------------ | ------------------------------------------------------- | -------- |
+| `hideDock`   | Hide the Hyper icon in the dock and app switcher.       | `false`  |
+| `hideOnBlur` | Hide Hyper when the windows lose focus.                 | `false`  |
+| `hotkey`     | Shortcut<sup>1</sup> to toggle Hyper window visibility. | `Ctrl+;` |
 
 ## Example Config
 
@@ -45,3 +43,5 @@ module.exports = {
   plugins: ['hyperterm-summon'],
 };
 ```
+
+<sup>1</sup> For a list of valid shortcuts, see [Electron Accelerators](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
