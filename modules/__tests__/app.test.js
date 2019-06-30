@@ -100,12 +100,8 @@ describe('generateActivateCallback', () => {
     callback = jest.fn();
   });
 
-  it('returns a function', () => {
-    expect(generateActivateCallback(callback)(app)).toBeInstanceOf(Function);
-  });
-
   it('resulting callback shows the windows', () => {
-    generateActivateCallback(callback)(app)();
+    generateActivateCallback(callback, app)();
 
     expect(callback).toHaveBeenCalledTimes(1);
   });

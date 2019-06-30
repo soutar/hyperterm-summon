@@ -24,7 +24,7 @@ const applyConfig = (app, handleBlur) => {
   }
 };
 
-const generateActivateCallback = callback => app => event => callback(app);
+const generateActivateCallback = (callback, app) => event => callback(app);
 
 const onApp = (app, callback, handleActivate) => {
   app.on('activate', handleActivate);

@@ -13,8 +13,8 @@ const {
 let cfgUnsubscribe, handleActivate, handleBlur;
 
 exports.onApp = app => {
-  handleBlur = generateBlurCallback(hideWindows)(app);
-  handleActivate = generateActivateCallback(showWindows)(app);
+  handleBlur = generateBlurCallback(hideWindows, app);
+  handleActivate = generateActivateCallback(showWindows, app);
   cfgUnsubscribe = onApp(
     app,
     applyConfig.bind(this, app, handleBlur),

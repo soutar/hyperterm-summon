@@ -4,7 +4,7 @@ const isFocused = function(w) {
   return w === this.getLastFocusedWindow();
 };
 
-exports.generateBlurCallback = callback => app =>
+exports.generateBlurCallback = (callback, app) =>
   debounce(() => {
     const focusedWindows = [...app.getWindows()].some(w => w.isFocused());
 
