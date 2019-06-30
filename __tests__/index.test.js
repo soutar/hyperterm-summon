@@ -12,17 +12,8 @@ const {
 const { onApp, onUnload } = require('../index');
 const dispose = require('../modules/dispose');
 
-jest.mock('../modules/app', () => ({
-  applyConfig: jest.fn(),
-  dispose: jest.fn(),
-  generateActivateCallback: jest.fn(() => jest.fn()),
-  onApp: jest.fn(),
-}));
-
-jest.mock('../modules/windows', () => ({
-  generateBlurCallback: jest.fn(() => jest.fn()),
-}));
-
+jest.mock('../modules/app');
+jest.mock('../modules/windows');
 jest.mock('../modules/dispose');
 
 const app = generateApp();
@@ -33,11 +24,11 @@ describe('onApp', () => {
   });
 
   it('generates a blur handler', () => {
-    expect(generateBlurCallback).toHaveBeenCalledWith(hideWindows);
+    expect(generateBlurCallback).toHaveBeenCalledWith(hideWindows, app);
   });
 
   it('generates a activate handler', () => {
-    expect(generateActivateCallback).toHaveBeenCalledWith(showWindows);
+    expect(generateActivateCallback).toHaveBeenCalledWith(showWindows, app);
   });
 
   it('executes hyperterm-summon onApp', () => {

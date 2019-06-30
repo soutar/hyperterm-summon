@@ -21,13 +21,9 @@ describe('generateBlurCallback', () => {
     app.getWindows.mockReturnValue(set);
   });
 
-  it('returns a function', () => {
-    expect(generateBlurCallback(callback)).toEqual(expect.any(Function));
-  });
-
   describe('when no focused windows', () => {
     it('executes the callback', () => {
-      generateBlurCallback(callback)(app)();
+      generateBlurCallback(callback, app)();
 
       jest.runAllTimers();
 
@@ -47,7 +43,7 @@ describe('generateBlurCallback', () => {
     });
 
     it('does not execute the callback', () => {
-      generateBlurCallback(callback)(app)();
+      generateBlurCallback(callback, app)();
 
       jest.runAllTimers();
 
