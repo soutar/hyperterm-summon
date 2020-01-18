@@ -11,7 +11,7 @@ const applyConfig = (app, handleBlur) => {
   const config = Object.assign({}, DEFAULTS, app.config.getConfig().summon);
 
   // TODO: Unregister prior to registering when supported
-  registerShortcut('summon', toggle, DEFAULTS.hotkey)(app);
+  registerShortcut('summon', toggle, config.hotkey)(app);
 
   if (app.dock) {
     config.hideDock ? app.dock.hide() : app.dock.show();
