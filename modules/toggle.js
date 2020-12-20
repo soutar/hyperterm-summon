@@ -1,7 +1,10 @@
 const { hideWindows, showWindows } = require('./windows');
 
 module.exports = app => {
-  const focusedWindows = [...app.getWindows()].filter(w => w.isFocused());
+  // @NOTE: Linux reports blurred windows as focused, so also use isVisible
+  const focusedWindows = [...app.getWindows()].filter(
+    w => w.isFocused() && w.isVisible()
+  );
 
   focusedWindows.length > 0 ? hideWindows(app) : showWindows(app);
 };
