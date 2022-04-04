@@ -17,9 +17,7 @@ const applyConfig = (app, handleBlur) => {
     config.hideDock ? app.dock.hide() : app.dock.show();
   }
 
-  // Linux handles blurs strangely
-  // override hideOnBlur to true here, so summon at least works!
-  if (!config.hideOnBlur && process.platform !== 'linux') {
+  if (!config.hideOnBlur) {
     app.removeListener('browser-window-blur', handleBlur);
   } else if (!app.listeners('browser-window-blur').includes(handleBlur)) {
     app.on('browser-window-blur', handleBlur);
