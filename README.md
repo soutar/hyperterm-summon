@@ -1,8 +1,5 @@
 # hyperterm-summon
 
-[![Build Status](https://travis-ci.org/soutar/hyperterm-summon.svg?branch=master)](https://travis-ci.org/soutar/hyperterm-summon)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
 Summon your Hyper windows with a system-wide hotkey.
 
 In a multi-window situation, hyperterm-summon will remember the last active
