@@ -5,6 +5,7 @@ const DEFAULTS = {
   hideDock: false,
   hideOnBlur: false,
   hotkey: 'Ctrl+;',
+  hideOnStart: true, //temporarliy for tests true
 };
 
 const applyConfig = (app, handleBlur) => {
@@ -21,6 +22,9 @@ const applyConfig = (app, handleBlur) => {
     app.removeListener('browser-window-blur', handleBlur);
   } else if (!app.listeners('browser-window-blur').includes(handleBlur)) {
     app.on('browser-window-blur', handleBlur);
+  }
+  if (config.hideOnStart) {
+    //TODO logic here
   }
 };
 
